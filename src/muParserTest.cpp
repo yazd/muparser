@@ -913,6 +913,7 @@ namespace mu
       iStat += ThrowTest(_T("1 : 2"), ecMISPLACED_COLON); 
       iStat += ThrowTest(_T("(1) ? 1 : 2 : 3"), ecMISPLACED_COLON); 
       iStat += ThrowTest(_T("(true) ? 1 : 2 : 3"), ecUNASSIGNABLE_TOKEN); 
+      iStat += ThrowTest(_T("(1 ? 0) : (0 ? 0) : 0"), ecMISSING_ELSE_CLAUSE);
 
       iStat += EqnTest(_T("1 ? 128 : 255"), 128, true);
       iStat += EqnTest(_T("1<2 ? 128 : 255"), 128, true);

@@ -1185,6 +1185,7 @@ namespace mu
 
     ParserStack<token_type> stOpt, stVal;
     ParserStack<int> stArgCount;
+    ParserStack<int> stIfElseCount;
     token_type opta, opt;  // for storing operators
     token_type val, tval;  // for storing value
 
@@ -1229,7 +1230,6 @@ namespace mu
                 stOpt.push(opt);
                 break;
 
-
         case cmARG_SEP:
                 if (stArgCount.empty())
                   Error(ecUNEXPECTED_ARG_SEP, m_pTokenReader->GetPos());
@@ -1244,6 +1244,11 @@ namespace mu
 
        case cmBC:
                 {
+                  // Make sure expression is complete within brackets
+                  // to avoid statements like (1 ? 0) : (0 ? 0) : 0
+                  if ((stIfElseCount.empty() && m_nIfElseCounter != 0) || stIfElseCount.pop() != m_nIfElseCounter)
+                    Error(ecMISSING_ELSE_CLAUSE, m_pTokenReader->GetPos());
+
                   // The argument count for parameterless functions is zero
                   // by default an opening bracket sets parameter count to 1
                   // in preparation of arguments to come. If the last token
@@ -1357,6 +1362,7 @@ namespace mu
         //
         case cmBO:
                 stArgCount.push(1);
+                stIfElseCount.push(m_nIfElseCounter);
                 stOpt.push(opt);
                 break;
 
