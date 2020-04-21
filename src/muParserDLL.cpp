@@ -99,7 +99,7 @@ private:
     int m_nParserType;
 };
 
-static muChar_t s_tmpOutBuf[2048];
+static muChar_t s_tmpOutBuf[4096];
 
 //---------------------------------------------------------------------------
 //
