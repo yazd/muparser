@@ -192,7 +192,12 @@ API_EXPORT(const muChar_t*) mupGetVersion(muParserHandle_t a_hParser)
         muParser_t* const p(AsParser(a_hParser));
 
 #ifndef _UNICODE
-    snprintf(s_tmpOutBuf, sizeof(s_tmpOutBuf), "%s", p->GetVersion().c_str());
+    if (snprintf(s_tmpOutBuf, sizeof(s_tmpOutBuf), "%s", p->GetVersion().c_str()) > sizeof(s_tmpOutBuf) - 1)
+    {
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 1] = '.';
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 2] = '.';
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 3] = '.';
+    }
 #else
     wsprintf(s_tmpOutBuf, _T("%s"), p->GetVersion().c_str());
 #endif
@@ -670,7 +675,12 @@ API_EXPORT(const muChar_t*) mupGetExpr(muParserHandle_t a_hParser)
     // C# explodes when pMsg is returned directly. For some reason it can't access
     // the memory where the message lies directly.
 #ifndef _UNICODE
-    snprintf(s_tmpOutBuf, sizeof(s_tmpOutBuf), "%s", p->GetExpr().c_str());
+    if (snprintf(s_tmpOutBuf, sizeof(s_tmpOutBuf), "%s", p->GetExpr().c_str()) > sizeof(s_tmpOutBuf) - 1)
+    {
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 1] = '.';
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 2] = '.';
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 3] = '.';
+    }
 #else
     wsprintf(s_tmpOutBuf, _T("%s"), p->GetExpr().c_str());
 #endif
@@ -1033,7 +1043,12 @@ API_EXPORT(const muChar_t*) mupGetErrorMsg(muParserHandle_t a_hParser)
     // C# explodes when pMsg is returned directly. For some reason it can't access
     // the memory where the message lies directly.
 #ifndef _UNICODE
-    snprintf(s_tmpOutBuf, sizeof(s_tmpOutBuf), "%s", pMsg);
+    if (snprintf(s_tmpOutBuf, sizeof(s_tmpOutBuf), "%s", pMsg) > sizeof(s_tmpOutBuf) - 1)
+    {
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 1] = '.';
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 2] = '.';
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 3] = '.';
+    }
 #else
     wsprintf(s_tmpOutBuf, _T("%s"), pMsg);
 #endif
@@ -1052,7 +1067,12 @@ API_EXPORT(const muChar_t*) mupGetErrorToken(muParserHandle_t a_hParser)
     // C# explodes when pMsg is returned directly. For some reason it can't access
     // the memory where the message lies directly.
 #ifndef _UNICODE
-    snprintf(s_tmpOutBuf, sizeof(s_tmpOutBuf), "%s", pToken);
+    if (snprintf(s_tmpOutBuf, sizeof(s_tmpOutBuf), "%s", pToken) > sizeof(s_tmpOutBuf) - 1)
+    {
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 1] = '.';
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 2] = '.';
+        s_tmpOutBuf[sizeof(s_tmpOutBuf) - 3] = '.';
+    }
 #else
     wsprintf(s_tmpOutBuf, _T("%s"), pToken);
 #endif
